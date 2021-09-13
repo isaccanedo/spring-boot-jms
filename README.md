@@ -9,4 +9,26 @@ JMS (Java Message Service) é um Java Message Oriented Middleware usado para env
 - Mensagens assíncronas. Como o tempo de processamento da mensagem não pode ser garantido, o cliente que a enviou pode prosseguir de forma assíncrona até a conclusão da transação. Devido a isso, a fila deve ser usada para gravar dados (POST se você estiver pensando em uma mentalidade RESTful).
 - Acoplamento solto. Os serviços não interagem diretamente e só sabem onde está a fila de mensagens, onde um serviço envia mensagens e o outro as recebe.
 
+Agora, vamos começar a implementá-lo de fato. Conforme mencionado anteriormente, usaremos Spring Boot, que torna tudo fácil e agradável de configurar, e Apache ActiveMQ para criar e gerenciar a fila de mensagens.
+
+As dependências do Maven necessárias para configurar o JMS são mostradas abaixo (algumas dependências extras não relacionadas ao JMS foram usadas e não são mostradas no snippet de código):
+
+```
+<dependencies>
+  <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-activemq</artifactId>
+  </dependency>
+  <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-broker</artifactId>
+  </dependency>
+  <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+  </dependency>
+  <!-- unrelated dependencies -->
+</dependencies>
+```
+
 
