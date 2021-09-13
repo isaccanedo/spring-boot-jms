@@ -47,3 +47,7 @@ public class OrderTransactionReceiver {
 }
 ```
 
+Nesse cenário, o OrderTransactionReceiver obtém mensagens de OrderTransactionQueue e as salva no banco de dados usando o transactionRepository. O nome do método que recebe a mensagem é irrelevante e pode ser chamado como você quiser, embora receiveMessage seja bastante apropriado - mas deve ter a anotação @JmsListener com propriedade de destino definindo o nome da fila. Incluída nesta anotação está a propriedade containerFactory, que não é necessária se você estiver satisfeito com o DefaultJmsListenerContainerFactory padrão fornecido pelo Spring Boot.
+
+Portanto, agora que podemos pegar mensagens da fila, provavelmente é uma boa ideia saber como colocá-las lá em primeiro lugar.
+
