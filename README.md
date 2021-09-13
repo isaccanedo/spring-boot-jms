@@ -51,3 +51,19 @@ Nesse cenário, o OrderTransactionReceiver obtém mensagens de OrderTransactionQ
 
 Portanto, agora que podemos pegar mensagens da fila, provavelmente é uma boa ideia saber como colocá-las lá em primeiro lugar.
 
+```
+@RestController
+@RequestMapping("/transaction")
+public class OrderTransactionController {
+
+  @Autowired private JmsTemplate jmsTemplate;
+
+  @PostMapping("/send")
+  public void send(@RequestBody OrderTransaction transaction) {
+    System.out.println("Sending a transaction.");
+    // Post message to the message queue named "OrderTransactionQueue"
+    jmsTemplate.convertAndSend("OrderTransactionQueue", transaction);
+  }
+}
+```
+
