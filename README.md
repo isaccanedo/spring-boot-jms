@@ -7,3 +7,6 @@ JMS (Java Message Service) é um Java Message Oriented Middleware usado para env
 
 - Redundância. Uma mensagem deve confirmar que concluiu sua transação e que agora pode ser removida da fila, mas se a transação falhar, ela pode ser reprocessada. As mensagens também podem ser armazenadas em um banco de dados, permitindo que continuem mais tarde, mesmo se o servidor parar.
 - Mensagens assíncronas. Como o tempo de processamento da mensagem não pode ser garantido, o cliente que a enviou pode prosseguir de forma assíncrona até a conclusão da transação. Devido a isso, a fila deve ser usada para gravar dados (POST se você estiver pensando em uma mentalidade RESTful).
+- Acoplamento solto. Os serviços não interagem diretamente e só sabem onde está a fila de mensagens, onde um serviço envia mensagens e o outro as recebe.
+
+
