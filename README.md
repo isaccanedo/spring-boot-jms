@@ -192,4 +192,5 @@ An error has occurred in the transaction
 An error has occurred in the transaction
 ```
 
+# Conclusão
 Então só temos isso. Configuramos um JMS simples usando Spring Boot e Apache ActiveMQ e obtivemos uma pequena introdução sobre por que filas de mensagens como JMS podem ser úteis 
