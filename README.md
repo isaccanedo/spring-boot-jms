@@ -151,3 +151,7 @@ spring.activemq.user=admin
 spring.activemq.password=admin
 spring.activemq.broker-url=tcp://localhost:61616?jms.redeliveryPolicy.maximumRedeliveries=1
 ```
+
+Como podemos ver no snippet acima, a quantidade máxima de novas entregas agora será limitada a 1; as outras propriedades são o nome de usuário e a senha padrão do ActiveMQ. No caso de você começar a se perguntar sobre qual porta está sendo usada por aqui pelo broker-url, esta é a porta padrão em que o ActiveMQ está sendo executado, então deve (espero ...) funcionar imediatamente se você tentar.
+
+Voltando à saída do console, ele também mencionou não ter um ErrorHandler definido, então vamos configurar um adicionando algum código extra à fábrica que foi criado anteriormente.
