@@ -30,5 +30,20 @@ As dependências do Maven necessárias para configurar o JMS são mostradas abai
   <!-- unrelated dependencies -->
 </dependencies>
 ```
+A primeira coisa que veremos é o receptor, que pegará uma mensagem do início da fila e executará uma transação.
 
+```
+@Component
+public class OrderTransactionReceiver {
+
+  @Autowired
+  private OrderTransactionRepository transactionRepository;
+
+  @JmsListener(destination = "OrderTransactionQueue", containerFactory = "myFactory")
+  public void receiveMessage(OrderTransaction transaction) {
+    System.out.println("Received <" + transaction + ">");
+    transactionRepository.save(transaction);
+  }
+}
+```
 
