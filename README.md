@@ -155,3 +155,41 @@ spring.activemq.broker-url=tcp://localhost:61616?jms.redeliveryPolicy.maximumRed
 Como podemos ver no snippet acima, a quantidade máxima de novas entregas agora será limitada a 1; as outras propriedades são o nome de usuário e a senha padrão do ActiveMQ. No caso de você começar a se perguntar sobre qual porta está sendo usada por aqui pelo broker-url, esta é a porta padrão em que o ActiveMQ está sendo executado, então deve (espero ...) funcionar imediatamente se você tentar.
 
 Voltando à saída do console, ele também mencionou não ter um ErrorHandler definido, então vamos configurar um adicionando algum código extra à fábrica que foi criado anteriormente.
+
+```
+@Bean
+public JmsListenerContainerFactory<?> myFactory(
+    ConnectionFactory connectionFactory,
+    DefaultJmsListenerContainerFactoryConfigurer configurer) {
+  DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+
+  // anonymous class
+  factory.setErrorHandler(
+      new ErrorHandler() {
+        @Override
+        public void handleError(Throwable t) {
+          System.err.println("An error has occurred in the transaction");
+        }
+      });
+
+  // lambda function
+  factory.setErrorHandler(t -> System.err.println("An error has occurred in the transaction"));
+
+  configurer.configure(factory, connectionFactory);
+  return factory;
+}
+```
+
+Agora, quando ocorre um erro, o horrível rastreio da pilha não afetará o log do console - a menos que você queira, é claro. Incluí a classe anônima e as versões de função lambda da implementação do ErrorHandler para que fique um pouco claro o que ele está fazendo.
+
+Configurando as entregas máximas e adicionando o ErrorHandler, a saída do console agora será semelhante a:
+
+```
+Sending a transaction.
+<1> Received <OrderTransaction(from=you, to=me, amount=200)>
+An error has occurred in the transaction
+<2> Received <OrderTransaction(from=you, to=me, amount=200)>
+An error has occurred in the transaction
+```
+
+
